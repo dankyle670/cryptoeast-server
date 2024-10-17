@@ -1,7 +1,8 @@
 const axios = require('axios');
 
-exports.handler = async function(event, context) {
-  const { url } = event.queryStringParameters; // Utilisation des paramètres de la requête
+exports.handler = async function(event, context)
+{
+  const { url } = event.queryStringParameters;
 
   if (!url) {
     return {
@@ -9,15 +10,14 @@ exports.handler = async function(event, context) {
       body: JSON.stringify({ error: 'URL manquante dans la requête' })
     };
   }
-
   try {
     const response = await axios.get(url);
     return {
       statusCode: 200,
       headers: {
-        'Access-Control-Allow-Origin': '*', // Autoriser toutes les origines
-        'Access-Control-Allow-Methods': 'GET, OPTIONS', // Méthodes autorisées
-        'Content-Type': 'application/json' // Type de contenu
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(response.data)
     };
@@ -26,7 +26,7 @@ exports.handler = async function(event, context) {
     return {
       statusCode: 500,
       headers: {
-        'Access-Control-Allow-Origin': '*', // Assurez-vous d'ajouter les en-têtes CORS ici aussi
+        'Access-Control-Allow-Origin': '*',
       },
       body: JSON.stringify({ error: 'Erreur lors de la récupération des données depuis l\'API externe', details: error.message })
     };
